@@ -200,6 +200,19 @@ function listen(address, api_endpoint, callback) {
         )
         return decoded;
     }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // In order to work around issue wherein event listeners stop firing due to extended periods of inactivity.
+    const periodicallyPing = async () => {
+        while (true) {
+            web3.eth.getBlockNumber().then(console.log);
+            await sleep(1800000)
+        }
+    }
+    periodicallyPing()
 }
 
 
